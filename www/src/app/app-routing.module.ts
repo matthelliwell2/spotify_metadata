@@ -5,7 +5,7 @@ import {TracksComponent} from "./tracks/tracks.component";
 const routes = [{path:"tracks", component: TracksComponent}]
 @NgModule({
     exports: [RouterModule],
-    imports: [ RouterModule.forRoot(routes)]
+    imports: [RouterModule.forRoot(routes)]
 })
 export class AppRoutingModule {
 }

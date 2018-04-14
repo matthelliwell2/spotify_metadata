@@ -5,19 +5,23 @@ import {AppComponent} from './app.component'
 import {TracksComponent} from './tracks/tracks.component'
 import {FormsModule} from '@angular/forms'
 import {MetadataService} from "./metadata.service"
-import { AppRoutingModule } from './app-routing.module'
-import {HttpClientModule} from "@angular/common/http"
+import {AppRoutingModule} from './app-routing.module'
+import {HttpClientModule} from "@angular/common/http";
+import {AppNavbarComponent} from './app-navbar/app-navbar.component'
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
     declarations: [
         AppComponent,
-        TracksComponent
+        TracksComponent,
+        AppNavbarComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        NgbModule.forRoot()
     ],
     providers: [MetadataService],
     bootstrap: [AppComponent]

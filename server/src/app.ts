@@ -3,12 +3,13 @@ import * as bodyParser from "body-parser"
 import * as expressValidator from "express-validator"
 import * as cors from "cors"
 import * as pg from "pg"
+import {getAlbum} from "./spotify";
 
 export const app = express()
 
 app.set("port", process.env.PORT || 3001);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 app.use(cors())
 app.set('json spaces', 2)
@@ -48,6 +49,37 @@ app.get("/tracks", (req, res) => {
 
 })
 
+app.get("/album/:id", async (req, res) => {
+    try {
+        const album = await getAlbum(req.params.id);
+        res.json(album)
+    } catch (err) {
+        console.log(`Error: ${err}`)
+        res.status(err.statusCode).json(err)
+    }
+
+   /* const spotifyApi = new SpotifyWebApi({
+        clientId: clientId,
+        clientSecret: clientSecret
+    })
+
+    try {
+        const granted = await spotifyApi.clientCredentialsGrant()
+        console.log('The access token expires in ' + granted.body.expires_in)
+        console.log('The access token is ' + granted.body.access_token)
+
+        spotifyApi.setAccessToken(granted.body.access_token + "223")
+
+        const album = await spotifyApi.getAlbum(req.params.id)
+        res.json(album.body)
+    } catch (err) {
+        console.log(`Error: ${err}`)
+        res.status(err.statusCode).json(err)
+    }*/
+})
+
 const disconnect = (client: pg.Client) => {
-    client.end().catch((err) => {console.log(`Failed to disconnect ${err}`)})
+    client.end().catch((err) => {
+        console.log(`Failed to disconnect ${err}`)
+    })
 }
