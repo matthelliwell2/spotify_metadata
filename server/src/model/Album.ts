@@ -1,4 +1,6 @@
 import {Tag} from "./Tag";
+import {Image} from "../spotify-web-api-node";
+import {Artist} from "./Artist";
 
 /**
  * This is the model of an album that is passed to the client. It combines selected data from Spotify with a set
@@ -11,6 +13,9 @@ export class Album {
                 public readonly url: string,
                 public readonly name: string,
                 public readonly label: string,
-                public readonly genres: string[]) {
+                public readonly releaseDate: string,
+                public readonly genres: string[],
+                public readonly images: Image[],
+                public readonly artists: Artist[]) {
     }
 }

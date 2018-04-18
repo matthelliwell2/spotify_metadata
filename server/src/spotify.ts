@@ -1,4 +1,6 @@
 import {Album} from "./model/Album"
+import * as SpotifyTypes from "./spotify-web-api-node";
+import {Artist} from "./model/Artist";
 
 const SpotifyWebApi = require('spotify-web-api-node')
 
@@ -15,7 +17,6 @@ async function getSpotifyApi() {
 
     const granted = await spotifyApi.clientCredentialsGrant()
     console.log('The access token expires in ' + granted.body.expires_in)
-    console.log('The access token is ' + granted.body.access_token)
 
     spotifyApi.setAccessToken(granted.body.access_token)
     return spotifyApi;
@@ -24,7 +25,18 @@ async function getSpotifyApi() {
 export const getAlbum = async (id: string): Promise<Album> => {
     const spotifyApi = await getSpotifyApi();
 
-    const album = await spotifyApi.getAlbum(id)
+    const album: SpotifyTypes.Album = (await spotifyApi.getAlbum(id)).body
 
-    return new Album(album.body.id, album.body.external_urls["spotify"], album.body.name, album.body.label, album.body.genres)
+    return toAlbum(album)
+}
+
+const toAlbum = (album: SpotifyTypes.Album): Album => {
+    return new Album(album.id, album.external_urls["spotify"], album.name, album.label, album.release_date, album.genres, album.images, toArtists(album.artists))
+}
+
+const toArtists = (artists: SpotifyTypes.SimplifiedArtist[]): Artist[] => {
+    return artists.map(toArtist)
+}
+const toArtist = (artist: SpotifyTypes.SimplifiedArtist): Artist => {
+    return new Artist(artist.id, artist.external_urls["spotify"], artist.name)
 }

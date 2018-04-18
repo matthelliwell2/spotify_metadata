@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
-import {Track} from "./tracks/Track"
 import {Observable} from 'rxjs/Observable'
 import {HttpClient} from '@angular/common/http'
+import {Album} from '../../../server/src/model/Album'
 
 @Injectable()
 export class MetadataService {
@@ -11,7 +11,7 @@ export class MetadataService {
     constructor(private http: HttpClient) {
     }
 
-    getTracks(): Observable<Track[]> {
-        return this.http.get<Track[]>(`${this.baseUrl}/tracks`)
+    getAlbum(id: string): Observable<Album> {
+        return this.http.get<Album>(`${this.baseUrl}/album/${id}`)
     }
 }

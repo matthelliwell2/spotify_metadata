@@ -10,12 +10,8 @@ If I ever get around to it this will be moved over to AWS with lambdas.
 
 TODO
 
-- [ ] Sketch out more complete UI for viewing data
 - [ ] Migrate to aws
 - [ ] Sort out character set problems, eg in Pärt
-- [ ] Styling to the front end
-- [ ] Identification and authorisation
 - [ ] Pact tests for the server
-- [ ] Import tracks from Spotify
-- [ ] Import albums from Spotify
-- [ ] Sketch out UI for updating data
+- [ ] Encode/decode parameters in urls
+- [ ] Prefix routes with /v1
