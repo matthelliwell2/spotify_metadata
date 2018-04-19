@@ -1,0 +1,15 @@
+<div class="container" *ngIf="album">
+    <div class="row">
+        <div class="col-md">
+            <a href={{album.url}} target="_blank"><img src={{album.images[1].url}} alt={{album.name}} /></a>
+        </div>
+        <div class="col-md">
+            <h4>{{album.name}}</h4>
+            <a *ngFor="let artist of album.artists" href="{{artist.url}}" target="_blank">{{artist.name}}</a>
+            <div>({{album.label}})</div>
+        </div>
+        <div class="col-md">
+            <app-tags [album]="album"></app-tags>
+        </div>
+    </div>
+</div>

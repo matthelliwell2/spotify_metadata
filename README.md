@@ -9,9 +9,13 @@ It is currently split into a frontend, in www directory, and a rest api, in serv
 If I ever get around to it this will be moved over to AWS with lambdas.
 
 TODO
-
+- [ ] Implement save album tags
+- [ ] Clean up layout
+- [ ] Validate input - limit tag names to list from db
+- [ ] Complete as type for tag names and values
+- [ ] Handle tracks
 - [ ] Migrate to aws
 - [ ] Sort out character set problems, eg in Pärt
-- [ ] Pact tests for the server
+- [ ] Pact tests for the server?
 - [ ] Encode/decode parameters in urls
 - [ ] Prefix routes with /v1
