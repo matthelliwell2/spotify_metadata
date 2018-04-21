@@ -6,7 +6,7 @@ import {Album} from '../../../server/src/model/Album'
 @Injectable()
 export class MetadataService {
 
-    private baseUrl = "http://localhost:3001"
+    private baseUrl = "http://192.168.1.68:3001"
 
     constructor(private http: HttpClient) {
     }

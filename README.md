@@ -13,6 +13,7 @@ TODO
 - [ ] Clean up layout
 - [ ] Validate input - limit tag names to list from db
 - [ ] Complete as type for tag names and values
+- [ ] Useful error messages
 - [ ] Handle tracks
 - [ ] Migrate to aws
 - [ ] Sort out character set problems, eg in Pärt

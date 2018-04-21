@@ -53,7 +53,7 @@ app.get("/tracks", (req, res) => {
 app.get("/album/:id", async (req, res) => {
     try {
         const album = await spotify.getAlbum(req.params.id)
-        // TODO get tags and merge
+        album.tags = await repo.getAlbumTags(req.params.id)
         res.json(album)
     } catch (err) {
         console.log(`Faild to get: ${err}`)

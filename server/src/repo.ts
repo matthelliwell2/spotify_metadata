@@ -3,35 +3,30 @@ import {Album} from "./model/Album";
 import {Tag} from "./model/Tag";
 
 const connectionString = "postgres://spotify_metadata@localhost:5432/spotify_metadata?encoding=UTF-8"
-/*
 
-const albumTagsSql =
-    "  select t1.id,t1.name,t1.url,\n" +
-    "    (\n" +
-    "      select coalesce(json_agg(r), '[]') as tags from\n" +
-    "        (\n" +
-    "          select tags.name,tags.value from albums a2\n" +
-    "            join albums_tags at on at.album_id = a2.id\n" +
-    "            join tags on tags.id = at.tag_id\n" +
-    "          where t2.id = {}\n" +
-    "        ) r\n" +
-    "    )\n" +
-    "  from albums t1";
+const getAlbumTagsSql = `select coalesce(json_agg(r), '[]') as tags from (
+    select tags.name, tags.value
+    from tags
+      join albums_tags on albums_tags.tag_id = tags.id
+      join albums on albums.id = albums_tags.album_id
+    where albums.id = $1
+) r`
 
+export const getAlbumTags = async (id: string): Promise<Tag[]> => {
+    console.log(`getAlbumTags ${id}`)
+    try {
+        const client = new pg.Client(connectionString)
+        await client.connect()
 
-export const getAlbumTags = (id: string): Tag[] => {
-    const client = new pg.Client(connectionString)
-    client.connect().then(() => {
-        return client.query(albumTagsSql)
-    }).then((result) => {
-        console.log(result)
-        res.json(result.rows)
-        disconnect(client)
-    }).catch((err) => {
-        console.log(err)
-        disconnect(client)
-    })
-}*/
+        const result = await client.query(getAlbumTagsSql,[id])
+        await client.end()
+
+        return result.rows[0].tags
+    } catch (err) {
+        console.log(`getAlbumTags for album id ${id} failed, error ${err}`)
+        throw err
+    }
+}
 
 export const upsertAlbum = async (album: Album): Promise<void> => {
     console.log(`upsertAlbum id ${album.id}`)
@@ -58,8 +53,8 @@ export const upsertAlbum = async (album: Album): Promise<void> => {
 
         return Promise.resolve()
     } catch (err) {
-        console.log(`upsert for album ${album.url}, error ${err}`)
-        return Promise.reject(err)
+        console.log(`upsert for album id ${album.id} failed, error ${err}`)
+        throw err
     }
 }
 

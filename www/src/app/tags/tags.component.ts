@@ -16,26 +16,36 @@ export class TagsComponent implements OnInit {
     // TODO when we do tracks this will have to change
     @Input() album: Album
 
+    error = false
+    status: string
+    saved = false
+
     readonly onPlusClicked = () => {
         this.album.tags.push(new Tag("", ""))
+        this.saved = false
     }
 
     readonly onDeleteClicked = (tagIndex: number) => {
         this.album.tags.splice(tagIndex, 1)
+        this.saved = false
     }
 
     ngOnInit() {
     }
 
-    onSubmit() {
+    async onSubmit() {
+        this.status = ""
+        this.saved = true
         console.log(`Saving album ${this.album.name}`)
         try {
-            const result = this.metadataService.putAlbum(this.album).toPromise()
+            const result = await this.metadataService.putAlbum(this.album).toPromise()
             console.log(result)
+            this.status = "Successfully saved"
+            this.error = false
         } catch (err) {
             console.log(err)
+            this.status = JSON.stringify(err)
+            this.error = true
         }
     }
-
-    get diagnostic() { return JSON.stringify(this.album.tags); }
 }
