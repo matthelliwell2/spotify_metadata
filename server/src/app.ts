@@ -3,7 +3,8 @@ import * as bodyParser from "body-parser"
 import * as expressValidator from "express-validator"
 import * as cors from "cors"
 import * as pg from "pg"
-import {getAlbum} from "./spotify";
+import * as spotify from "./spotify"
+import * as repo from "./repo"
 
 export const app = express()
 
@@ -51,31 +52,25 @@ app.get("/tracks", (req, res) => {
 
 app.get("/album/:id", async (req, res) => {
     try {
-        const album = await getAlbum(req.params.id);
+        const album = await spotify.getAlbum(req.params.id)
+        // TODO get tags and merge
         res.json(album)
     } catch (err) {
-        console.log(`Error: ${err}`)
-        res.status(err.statusCode).json(err)
+        console.log(`Faild to get: ${err}`)
+        res.status(400).json(err)
+    }
+})
+
+app.post("/album", async (req, res) => {
+    console.log(req.body)
+    try {
+        await repo.upsertAlbum(req.body)
+        res.json("done")
+    } catch (err) {
+        console.log(`Failed to save: ${err}`)
+        res.status(400).json(err)
     }
 
-   /* const spotifyApi = new SpotifyWebApi({
-        clientId: clientId,
-        clientSecret: clientSecret
-    })
-
-    try {
-        const granted = await spotifyApi.clientCredentialsGrant()
-        console.log('The access token expires in ' + granted.body.expires_in)
-        console.log('The access token is ' + granted.body.access_token)
-
-        spotifyApi.setAccessToken(granted.body.access_token + "223")
-
-        const album = await spotifyApi.getAlbum(req.params.id)
-        res.json(album.body)
-    } catch (err) {
-        console.log(`Error: ${err}`)
-        res.status(err.statusCode).json(err)
-    }*/
 })
 
 const disconnect = (client: pg.Client) => {

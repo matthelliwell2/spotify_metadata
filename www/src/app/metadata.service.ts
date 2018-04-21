@@ -14,4 +14,8 @@ export class MetadataService {
     getAlbum(id: string): Observable<Album> {
         return this.http.get<Album>(`${this.baseUrl}/album/${id}`)
     }
+
+    putAlbum(album: Album): Observable<Object> {
+        return this.http.post(`${this.baseUrl}/album`, album)
+    }
 }

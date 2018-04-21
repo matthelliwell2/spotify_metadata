@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Tag} from '../../../../server/src/model/Tag'
 import {Album} from '../../../../server/src/model/Album'
+import {MetadataService} from "../metadata.service";
 
 @Component({
     selector: 'app-tags',
@@ -8,6 +9,9 @@ import {Album} from '../../../../server/src/model/Album'
     styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
+
+    constructor(private metadataService: MetadataService) {
+    }
 
     // TODO when we do tracks this will have to change
     @Input() album: Album
@@ -24,7 +28,13 @@ export class TagsComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log("on submit called")
+        console.log(`Saving album ${this.album.name}`)
+        try {
+            const result = this.metadataService.putAlbum(this.album).toPromise()
+            console.log(result)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     get diagnostic() { return JSON.stringify(this.album.tags); }
