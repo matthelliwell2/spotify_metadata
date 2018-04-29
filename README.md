@@ -15,6 +15,7 @@ TODO
 - [ ] Complete as type for tag names and values
 - [ ] Useful error messages
 - [ ] Handle tracks
+- [ ] Add Aria labels etc
 - [ ] Migrate to aws
 - [ ] Sort out character set problems, eg in Pärt
 - [ ] Pact tests for the server?

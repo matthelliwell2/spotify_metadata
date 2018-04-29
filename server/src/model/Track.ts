@@ -1,26 +1,18 @@
 import {Tag} from "./Tag";
-import {Image} from "../spotify-web-api-node";
 import {Artist} from "./Artist";
-import {Track} from "./Track";
 
-/**
- * This is the model of an album that is passed to the client. It combines selected data from Spotify with a set
- * of tag data
- */
-export class Album {
+export class Track {
     tags: Tag[] = []
 
     constructor(public readonly id: string,
                 public readonly url: string,
                 public readonly name: string,
-                public readonly label: string,
-                public readonly releaseDate: string,
-                public readonly genres: string[],
-                public readonly images: Image[],
-                public readonly artists: Artist[],
-                public readonly tracks: Track[]) {
+                public readonly discNumber: number,
+                public readonly trackNumber: number,
+                public readonly artists: Artist[]) {
     }
 
+    // TODO this is the same code as in artists so we should make it common
     hasArtist(artistName: string): boolean {
         return this.artists.findIndex(artist => artist.name === artistName) >= 0
     }

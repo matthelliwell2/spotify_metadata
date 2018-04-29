@@ -9,7 +9,15 @@
             <div>({{album.label}})</div>
         </div>
         <div class="col-4">
-            <app-tags [album]="album"></app-tags>
+            <app-tags [album]="album" [tags]="album.tags"  [albumLevel]="true"></app-tags>
         </div>
+    </div>
+    <div class="row">
+        <i>Released {{album.releaseDate}}</i>
+    </div>
+    <div class="row" *ngFor="let track of album.tracks">
+        <div class="col-6">{{track.trackNumber}}. {{track.name}}</div>
+        <div class="col-2"><a *ngFor="let artist of track.artists" href="{{artist.url}}" target="_blank"><div>{{artist.name}}</div></a></div>
+        <div class="col-4"><app-tags [album]="album" [tags]="track.tags" [albumLevel]="false"></app-tags></div>
     </div>
 </div>

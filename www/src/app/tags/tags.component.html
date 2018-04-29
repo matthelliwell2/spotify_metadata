@@ -1,18 +1,16 @@
 <div *ngIf="album">
     <form (ngSubmit)="onSubmit()">
-        <div class="row">
+        <div class="row" *ngIf="albumLevel">
             <div class="col-12">
                 Catalogue
             </div>
         </div>
-        <div *ngFor="let tag of album.tags; index as i" class="row">
+        <div *ngFor="let tag of tags; index as i" class="row">
             <div class="col-4 nopadding">
-                <input type="text" required class="form-control" [(ngModel)]="album.tags[i].name"
-                       name="name-{{i}}">
+                <app-tag-name [tag]=tag></app-tag-name>
             </div>
             <div class="col-7 nopadding">
-                <input type="text" required class="form-control" [(ngModel)]="album.tags[i].value"
-                       name="value-{{i}}">
+                <app-tag-value [tag]=tag></app-tag-value>
             </div>
             <div class="col-1 nopadding">
                 <button class="btn" type="button" (click)="onDeleteClicked(i)"><span octicon="x"></span>
@@ -25,12 +23,14 @@
                 <button class="btn" type="button" (click)="onPlusClicked()"><span octicon="plus"></span></button>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="albumLevel">
             <div class="col nopadding">
                 <button class="btn btn-success" type="submit">Save</button>
             </div>
         </div>
-        <div class="row">
+
+        <!--TODO Hide this when user starts typing after a save. -->
+        <div class="row" *ngIf="albumLevel">
             <div *ngIf="saved" class="alert nopadding col" style="margin-top: 16px"
                  [ngClass]="{'alert-danger': error, 'alert-success': !error}" role="alert">
                 &ensp;{{status}}

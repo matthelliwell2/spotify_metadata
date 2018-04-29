@@ -33,6 +33,8 @@
     "startDebug": "node %NODE_DEBUG_OPTION% -r ts-node/register src/server",
     "testDebug": "node -r ts-node/register %NODE_DEBUG_OPTION% ./node_modules/jasmine/bin/jasmine.js ",
     "test": "node -r ts-node/register ./node_modules/jasmine/bin/jasmine.js ",
-    "testAll": "node -r ts-node/register ./node_modules/jasmine/bin/jasmine.js"
+    "testAll": "node -r ts-node/register ./node_modules/jasmine/bin/jasmine.js",
+    "populate": "node -e require('./src/populate/populate').tagAlbumsByComposers()",
+    "populateDebug": "node %NODE_DEBUG_OPTION% -e require('./src/populate/populate').tagAlbumsByComposers()"
   }
 }

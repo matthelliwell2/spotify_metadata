@@ -10,7 +10,9 @@ import {AppNavbarComponent} from './app-navbar/app-navbar.component'
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 import {AlbumComponent} from './album/album.component'
 import {TagsComponent} from './tags/tags.component'
-import {OcticonDirective} from './octicon.directive'
+import {OcticonDirective} from './octicon.directive';
+import {TagNameComponent} from './tag-name/tag-name.component';
+import {TagValueComponent} from './tag-value/tag-value.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +20,9 @@ import {OcticonDirective} from './octicon.directive'
         AppNavbarComponent,
         AlbumComponent,
         TagsComponent,
-        OcticonDirective
+        OcticonDirective,
+        TagNameComponent,
+        TagValueComponent,
     ],
     imports: [
         BrowserModule,

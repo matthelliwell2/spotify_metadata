@@ -1,7 +1,7 @@
 import {getAlbum} from "../src/spotify"
 
 describe("getAlbum", () => {
-    it("should return an album without tags", async (done) => {
+    xit("should return an album without tags", async (done) => {
         const album = await getAlbum("5EaDT1qwVjMTfSNQwUuAi0")
 
         const result = {...album}
