@@ -14,7 +14,7 @@ export class Track {
 
     // TODO this is the same code as in artists so we should make it common
     hasArtist(artistName: string): boolean {
-        return this.artists.findIndex(artist => artist.name === artistName) >= 0
+        return this.artists.findIndex(artist => artist.name.toLowerCase() === artistName.toLowerCase()) >= 0
     }
 
     insertTag(tagName: string, tagValue: string): void {

@@ -3,20 +3,28 @@ import {default as SpotifyWebApi, Page, SimplifiedArtist} from "../spotify-web-a
 import {getSpotifyApi} from "../spotify"
 import * as repo from "../repo"
 import {Album} from "../model/Album"
-import {composers} from "./composers";
+import {conductors} from "./conductors";
 import * as dao from "../dao";
 import {Track} from "../model/Track";
 
-export const tagAlbumsByComposers = async () => {
+export const tagAlbumsByConductor = async () => {
     try {
-        const spotifyApi = await getSpotifyApi()
-        for (let composer of composers) {
-            const artist = await getSimplifiedArtist(composer, spotifyApi)
+        let tokenStart = new Date().getTime()
+        let spotifyApi = await getSpotifyApi()
+        for (let conductor of conductors) {
+            const artist = await getSimplifiedArtist(conductor, spotifyApi)
             if (artist !== undefined) {
-                console.log(`Tagging albums by ${composer}`)
-                await tagAlbums(artist.id, "Composer", composer, spotifyApi)
+                console.log(`Tagging albums by ${conductor}`)
+                await tagAlbums(artist.id, "Conductor", conductor, spotifyApi)
             } else {
-                console.log(`No albums found for artist ${composer}`)
+                console.log(`No albums found for artist ${conductor}`)
+            }
+
+            // We know the token is valid for 3600 seconds to refresh it as it gets near this time
+            if ((new Date().getTime() - tokenStart)/1000 > 3000) {
+                console.log("refreshing access token")
+                spotifyApi = await getSpotifyApi()
+                tokenStart = new Date().getTime()
             }
         }
     } catch (err) {

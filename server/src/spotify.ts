@@ -21,7 +21,8 @@ export const getSpotifyApi = async () => {
     console.log('The access token expires in ' + granted.body.expires_in)
 
     spotifyApi.setAccessToken(granted.body.access_token)
-    return spotifyApi;
+    spotifyApi.setRefreshToken(granted.body.refresh_token)
+    return spotifyApi
 }
 
 export const getAlbum = async (id: string, spotifyApi: SpotifyWebApi): Promise<Album> => {

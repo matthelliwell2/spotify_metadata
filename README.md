@@ -21,3 +21,6 @@ TODO
 - [ ] Pact tests for the server?
 - [ ] Encode/decode parameters in urls
 - [ ] Prefix routes with /v1
+- [ ] Refesh access token
+
+This project has been overtaken by Spotify introducing a tagging webpage so this project has been abandoned.

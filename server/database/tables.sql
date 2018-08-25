@@ -19,13 +19,15 @@ grant all on tags to spotify_metadata;
 -- is cached but this might change to reduce the number of calls we make to spotify.
 create table tracks (
   id text not null PRIMARY KEY,
-  album_id text not null
+  album_id text not null,
+  name citext not null
 );
 grant all on tracks to spotify_metadata;
 
 -- Table of album identified by the spotify id. As with tracks we don't cache any spotify data at the moment.
 create table albums (
-  id text not null PRIMARY KEY
+  id text not null PRIMARY KEY,
+  name citext not null
 );
 grant all on albums to spotify_metadata;
 

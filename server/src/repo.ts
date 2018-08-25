@@ -45,7 +45,10 @@ export const upsertAlbum = async (album: Album): Promise<void> => {
     await begin(client)
 
     await insertAlbum(client, album.id)
+    await updateAlbum(client, album)
+
     await insertTracks(client, album)
+    await updateTracks(client, album)
 
     await deleteTags(client, album.id)
     await insertTags(client, album.id, album.tags)
@@ -64,6 +67,13 @@ const insertAlbum = async (client: pg.Client, id: string): Promise<pg.QueryResul
     return client.query("insert into albums (id) values ($1) on conflict do nothing", [id])
 }
 
+/**
+ * Where we are caching result from spotify, always update the database to make sure we have the correct value.
+ */
+const updateAlbum = async (client: pg.Client, album: Album): Promise<pg.QueryResult> => {
+    return client.query("update albums set name=$1 where id=$2", [album.name, album.id])
+}
+
 const insertTracks = async (client: pg.Client, album: Album): Promise<any> => {
     // If this being called from the populate methods we won't have tracks at this point. This isn't a problem as
     // next time we save the album we'll get some tracks added.
@@ -76,6 +86,12 @@ const insertTracks = async (client: pg.Client, album: Album): Promise<any> => {
         return client.query(sql, parameters)
     } else {
         return Promise.resolve()
+    }
+}
+
+const updateTracks = async (client: pg.Client, album: Album): Promise<any> => {
+    for (let track of album.tracks) {
+        await client.query("update tracks set name=$1 where id=$2", [track.name, track.id])
     }
 }
 

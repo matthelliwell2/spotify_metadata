@@ -22,7 +22,7 @@ export class Album {
     }
 
     hasArtist(artistName: string): boolean {
-        return this.artists.findIndex(artist => artist.name === artistName) >= 0
+        return this.artists.findIndex(artist => artist.name.toLowerCase() === artistName.toLowerCase()) >= 0
     }
 
     insertTag(tagName: string, tagValue: string): void {
